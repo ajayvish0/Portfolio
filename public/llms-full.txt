@@ -1,0 +1,85 @@
+# Ajay Vishwakarma
+
+Ajay Vishwakarma is an AI full stack engineer (India) who builds real-time AI voice and SMS agents, softphone and power-dialer call infrastructure, and LLM-powered products with Node.js, FastAPI and React. He freelances for a property-tech CRM and was previously a Full Stack Developer at Cloudnexus, where he led Jobra AI, an ML-powered applicant tracking system. He holds a B.Tech in Computer Science (AIML) from Oriental Institute of Science and Technology.
+
+---
+
+# About
+
+Ajay Vishwakarma is an AI full stack engineer (India) who builds real-time AI voice and SMS agents, softphone and power-dialer call infrastructure, and LLM-powered products with Node.js, FastAPI and React. He freelances for a property-tech CRM and was previously a Full Stack Developer at Cloudnexus, where he led Jobra AI, an ML-powered applicant tracking system. He holds a B.Tech in Computer Science (AIML) from Oriental Institute of Science and Technology.
+
+---
+
+# Project: Property Voice AI
+
+Property Voice AI is a real-time voice negotiation trainer. You speak to David, an AI seller persona powered by OpenAI GPT-4o, and try to close a real-estate deal. David reacts to how the conversation goes, and at the end you get feedback you can act on.
+
+## Streaming replies, spoken sentence by sentence
+
+GPT-4o tokens stream to the browser over Socket.IO. Instead of waiting for the full reply, the client cuts the stream into sentences and plays each one through text-to-speech as soon as it is complete. David starts talking almost as soon as the model does.
+
+## Barge-in
+
+In a real negotiation people interrupt. When voice-activity detection hears the user start speaking, an AbortController cancels the active model stream and stops any queued audio straight away. The user never has to wait for David to finish a sentence they've already moved past.
+
+## An emotion state machine
+
+David has five moods, and a state machine moves between them turn by turn based on how the user is negotiating. His tone changes with his mood, so pushing too hard or handling an objection well changes how the rest of the call goes.
+
+## Scoring the call
+
+After the call, a scoring engine rates the conversation on five dimensions — persuasion, clarity, objection handling, closing, and engagement — so the feedback says what to practise next, not just how it went.
+
+## Resilience
+
+The trainer is built to keep a session going when parts of it fail: a mock-AI fallback answers when OpenAI returns an error, browser TTS takes over when the main speech path is unavailable, and incomplete utterances are handled instead of being sent as broken prompts.
+
+---
+
+# Project: PDF-Chat Application
+
+PDF-Chat lets you upload a PDF and ask questions about it in plain language. The backend is FastAPI, the interface is React, and conversations and metadata live in PostgreSQL.
+
+## Conversational querying with LangChain
+
+LangChain handles the NLP pipeline: it splits documents, retrieves the passages that matter for a question, and passes them to the language model to answer. The answers reach an 85% response relevance rate.
+
+## Async all the way through
+
+FastAPI's asynchronous request handling keeps slow work — reading documents, calling the model — from blocking other requests. Moving to async endpoints cut API response times by 50%.
+
+## Storage in Google Drive
+
+Uploaded documents are stored through the Google Drive API rather than on the application server. It supports documents up to 50MB with 99.9% data integrity.
+
+---
+
+# Barge-In Is the Feature
+
+A voice agent that keeps talking over you doesn't feel like a conversation. It feels like a recording. In Property Voice AI, the moment the user starts speaking, the AI seller stops — and that one behaviour does more for realism than any amount of prompt tuning.
+
+## Stream first, speak early
+
+GPT-4o tokens stream to the client over Socket.IO. The client cuts the stream into sentences and sends each finished sentence to text-to-speech, so the seller starts speaking before the full reply exists. Waiting for the whole reply would add seconds of silence to every turn.
+
+## Cancel everything at once
+
+Streaming creates a problem: at any moment there is a model request in flight and audio queued to play. When voice-activity detection hears the user, an AbortController cancels the model stream, and the audio queue is cleared in the same step. Cancelling only one of them leaves the agent either talking with nothing new to say, or silently paying for tokens nobody will hear.
+
+## The user is always in control
+
+Barge-in turns the agent from something you listen to into something you talk with. For a negotiation trainer that matters most: interrupting is part of negotiating.
+
+---
+
+# Move Slow Work Off the Request Path
+
+In a property-tech CRM, every finished call kicks off work: saving the disposition, updating the lead, syncing the campaign. None of that needs to happen before the agent's next call starts.
+
+## Do only what the caller needs now
+
+The request path now does just the work the caller is waiting on, and queues the rest as asynchronous background jobs. That change raised throughput by 45%.
+
+## Keep the queued work consistent
+
+Work that runs later can run twice, or run against data that changed in the meantime. Optimized indexing and transactional patterns keep those updates consistent, and cut data inconsistencies by 60%.

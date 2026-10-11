@@ -1,0 +1,16 @@
+---
+title: "Move Slow Work Off the Request Path"
+summary: "Call dispositions, campaign sync and lead updates don't need to block an agent's next call. Moving them to background jobs raised throughput by 45%."
+date: "2026-06-10"
+tags: ["Backend", "Async Jobs", "Data Integrity"]
+---
+
+In a property-tech CRM, every finished call kicks off work: saving the disposition, updating the lead, syncing the campaign. None of that needs to happen before the agent's next call starts.
+
+## Do only what the caller needs now
+
+The request path now does just the work the caller is waiting on, and queues the rest as asynchronous background jobs. That change raised throughput by 45%.
+
+## Keep the queued work consistent
+
+Work that runs later can run twice, or run against data that changed in the meantime. Optimized indexing and transactional patterns keep those updates consistent, and cut data inconsistencies by 60%.

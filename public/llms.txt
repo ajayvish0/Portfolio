@@ -1,0 +1,17 @@
+# Ajay Vishwakarma
+
+Ajay Vishwakarma is an AI full stack engineer (India) who builds real-time AI voice and SMS agents, softphone and power-dialer call infrastructure, and LLM-powered products with Node.js, FastAPI and React. He freelances for a property-tech CRM and was previously a Full Stack Developer at Cloudnexus, where he led Jobra AI, an ML-powered applicant tracking system. He holds a B.Tech in Computer Science (AIML) from Oriental Institute of Science and Technology.
+
+## Projects
+
+- [Property Voice AI](https://ajayvishwakarma.dev/projects/property-voice-ai): A real-time voice negotiation trainer where you practise closing a real-estate deal against David, an emotionally adaptive GPT-4o seller.
+- [PDF-Chat Application](https://ajayvishwakarma.dev/projects/pdf-chat): A full-stack app for asking questions of your PDF documents, built with FastAPI, LangChain, React, PostgreSQL, and the Google Drive API.
+
+## Writing
+
+- [Barge-In Is the Feature](https://ajayvishwakarma.dev/writing/barge-in-is-the-feature): A voice agent that keeps talking over you doesn't feel like a conversation. In Property Voice AI, user speech cancels the model stream and the audio queue instantly.
+- [Move Slow Work Off the Request Path](https://ajayvishwakarma.dev/writing/move-slow-work-off-the-request-path): Call dispositions, campaign sync and lead updates don't need to block an agent's next call. Moving them to background jobs raised throughput by 45%.
+
+## About
+
+- [About](https://ajayvishwakarma.dev/about): Full bio, experience, and skills.

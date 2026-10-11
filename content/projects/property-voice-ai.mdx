@@ -1,0 +1,31 @@
+---
+title: "Property Voice AI"
+summary: "A real-time voice negotiation trainer where you practise closing a real-estate deal against David, an emotionally adaptive GPT-4o seller."
+date: "2026-09-01"
+stack: ["React.js", "Node.js", "Express.js", "Socket.IO", "OpenAI GPT-4o", "Web Speech API"]
+role: "Designer & Engineer"
+outcome: "A full voice loop — streamed replies, instant barge-in, five seller moods, and a five-dimension post-call score — that keeps working when OpenAI or browser speech fails."
+repo: "https://github.com/Ajayvish0"
+---
+
+Property Voice AI is a real-time voice negotiation trainer. You speak to David, an AI seller persona powered by OpenAI GPT-4o, and try to close a real-estate deal. David reacts to how the conversation goes, and at the end you get feedback you can act on.
+
+## Streaming replies, spoken sentence by sentence
+
+GPT-4o tokens stream to the browser over Socket.IO. Instead of waiting for the full reply, the client cuts the stream into sentences and plays each one through text-to-speech as soon as it is complete. David starts talking almost as soon as the model does.
+
+## Barge-in
+
+In a real negotiation people interrupt. When voice-activity detection hears the user start speaking, an AbortController cancels the active model stream and stops any queued audio straight away. The user never has to wait for David to finish a sentence they've already moved past.
+
+## An emotion state machine
+
+David has five moods, and a state machine moves between them turn by turn based on how the user is negotiating. His tone changes with his mood, so pushing too hard or handling an objection well changes how the rest of the call goes.
+
+## Scoring the call
+
+After the call, a scoring engine rates the conversation on five dimensions — persuasion, clarity, objection handling, closing, and engagement — so the feedback says what to practise next, not just how it went.
+
+## Resilience
+
+The trainer is built to keep a session going when parts of it fail: a mock-AI fallback answers when OpenAI returns an error, browser TTS takes over when the main speech path is unavailable, and incomplete utterances are handled instead of being sent as broken prompts.

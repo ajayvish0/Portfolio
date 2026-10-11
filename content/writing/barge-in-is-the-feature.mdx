@@ -1,0 +1,20 @@
+---
+title: "Barge-In Is the Feature"
+summary: "A voice agent that keeps talking over you doesn't feel like a conversation. In Property Voice AI, user speech cancels the model stream and the audio queue instantly."
+date: "2026-09-15"
+tags: ["Voice AI", "Streaming", "Socket.IO"]
+---
+
+A voice agent that keeps talking over you doesn't feel like a conversation. It feels like a recording. In Property Voice AI, the moment the user starts speaking, the AI seller stops — and that one behaviour does more for realism than any amount of prompt tuning.
+
+## Stream first, speak early
+
+GPT-4o tokens stream to the client over Socket.IO. The client cuts the stream into sentences and sends each finished sentence to text-to-speech, so the seller starts speaking before the full reply exists. Waiting for the whole reply would add seconds of silence to every turn.
+
+## Cancel everything at once
+
+Streaming creates a problem: at any moment there is a model request in flight and audio queued to play. When voice-activity detection hears the user, an AbortController cancels the model stream, and the audio queue is cleared in the same step. Cancelling only one of them leaves the agent either talking with nothing new to say, or silently paying for tokens nobody will hear.
+
+## The user is always in control
+
+Barge-in turns the agent from something you listen to into something you talk with. For a negotiation trainer that matters most: interrupting is part of negotiating.

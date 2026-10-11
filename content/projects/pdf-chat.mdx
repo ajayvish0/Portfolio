@@ -1,0 +1,23 @@
+---
+title: "PDF-Chat Application"
+summary: "A full-stack app for asking questions of your PDF documents, built with FastAPI, LangChain, React, PostgreSQL, and the Google Drive API."
+date: "2024-05-01"
+stack: ["FastAPI", "LangChain", "React.js", "PostgreSQL", "Google Drive API"]
+role: "Full Stack Engineer"
+outcome: "85% response relevance, API responses 50% faster with async FastAPI, and secure storage for documents up to 50MB."
+repo: "https://github.com/Ajayvish0"
+---
+
+PDF-Chat lets you upload a PDF and ask questions about it in plain language. The backend is FastAPI, the interface is React, and conversations and metadata live in PostgreSQL.
+
+## Conversational querying with LangChain
+
+LangChain handles the NLP pipeline: it splits documents, retrieves the passages that matter for a question, and passes them to the language model to answer. The answers reach an 85% response relevance rate.
+
+## Async all the way through
+
+FastAPI's asynchronous request handling keeps slow work — reading documents, calling the model — from blocking other requests. Moving to async endpoints cut API response times by 50%.
+
+## Storage in Google Drive
+
+Uploaded documents are stored through the Google Drive API rather than on the application server. It supports documents up to 50MB with 99.9% data integrity.
