@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { BlogArchive } from "@/components/sections/blog-archive";
+import { NewsletterCard } from "@/components/sections/newsletter-subscribe";
 import { BLOGS } from "@/data/blogs";
+import { hasSentIssues } from "@/lib/buttondown";
 
 export const metadata: Metadata = {
   title: "Blogs",
@@ -9,7 +11,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/blogs" },
 };
 
-export default function BlogsPage() {
+export default async function BlogsPage() {
   return (
     <div className="max-w-none py-10">
       <h1 id="blogs" className="text-[2em] font-normal leading-[1.3] text-foreground/70 mb-2">
@@ -20,6 +22,9 @@ export default function BlogsPage() {
       </p>
 
       <BlogArchive posts={BLOGS} />
+
+      {/* Readers who reach the end of the archive are the likeliest subscribers. */}
+      <NewsletterCard showArchive={await hasSentIssues()} />
 
       <div className="mt-16 pt-6 border-t border-border font-mono text-sm">
         <a href="#blogs" className="text-primary hover:underline">

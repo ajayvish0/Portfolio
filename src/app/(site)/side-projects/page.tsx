@@ -62,14 +62,9 @@ export default function SideProjectsPage() {
               key={project.title}
               id={`project-${slugify(project.title)}`}
               className="flex flex-col rounded-lg border border-border bg-card p-5"
-              // Site search: each real project is its own result; placeholders are skipped.
-              {...(project.href || project.code
-                ? {
-                    "data-search-item": "",
-                    "data-search-title": project.title,
-                    "data-search-tags": project.language ?? "",
-                  }
-                : { "data-search-ignore": "" })}
+              data-search-item=""
+              data-search-title={project.title}
+              data-search-tags={project.language ?? ""}
             >
               <h3 data-toc-skip="true" className="text-[1.25em] font-bold leading-snug mb-2">
                 <ProjectTitle project={project} />

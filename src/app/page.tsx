@@ -11,6 +11,7 @@ import { HomeHeader } from "@/components/home/home-header";
 import { CopyEmailButton } from "@/components/sections/copy-email-button";
 import { NewsletterSubscribe } from "@/components/sections/newsletter-subscribe";
 import { BLOGS } from "@/data/blogs";
+import { hasSentIssues } from "@/lib/buttondown";
 import { home, type SocialType } from "@/data/home";
 import { buildSearchIndex } from "@/lib/search-index";
 import { cn } from "@/lib/utils";
@@ -129,7 +130,7 @@ const primaryButton = `${buttonBase} cursor-pointer border border-[var(--text)] 
 // A smaller primary button that sits beside a section heading.
 const headingButton = `${sans} inline-flex h-8 cursor-pointer items-center whitespace-nowrap rounded-lg border border-[var(--text)] bg-[var(--text)] px-3 text-[14px] font-medium text-[var(--on-text)] transition-colors hover:border-[var(--text-hover)] hover:bg-[var(--text-hover)]`;
 
-export default function Home() {
+export default async function Home() {
   const posts = getLatestPosts();
   const searchIndex = buildSearchIndex();
 
@@ -208,6 +209,7 @@ export default function Home() {
               <NewsletterSubscribe
                 className={headingButton}
                 submitClassName="border-[var(--text)] bg-[var(--text)] text-[var(--on-text)] hover:border-[var(--text-hover)] hover:bg-[var(--text-hover)]"
+                showArchive={await hasSentIssues()}
               />
               <Link
                 href="/blogs"

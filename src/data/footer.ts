@@ -1,5 +1,5 @@
 import type { IconType } from "react-icons";
-import { FaEnvelope, FaGithub, FaLinkedin, FaTwitter, FaYoutube } from "react-icons/fa";
+import { FaEnvelope, FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa";
 
 import { PERSON } from "@/lib/site";
 
@@ -28,33 +28,19 @@ export interface SocialLink {
   href?: string;
 }
 
-// Site-wide footer. Entries without an href are placeholders — add an href
-// when the page or profile exists and the entry becomes a normal link.
+// Site-wide footer. Only pages and profiles that exist. An entry without an
+// href still renders greyed out, so a new link can be drafted without a dead URL.
 export const FOOTER_COLUMNS: FooterColumn[] = [
   {
-    title: "Writings & Media",
+    title: "Work",
     links: [
-      { label: "Projects", hint: "Open-source", href: "/side-projects" },
+      { label: "Projects", hint: "Systems", href: "/side-projects" },
       { label: "Blogs", hint: "Essays", href: "/blogs" },
       { label: "Writing", hint: "Notes", href: "/writing" },
-      { label: "Videos", hint: "Walkthroughs" },
-      { label: "Papershelf", hint: "Research" },
-      { label: "Books", hint: "Reads", href: "/books" },
-      { label: "Talks & Appearances" },
-      { label: "RSS Feed", variant: "rss" },
     ],
   },
   {
-    title: "Masterclasses",
-    links: [
-      { label: "Placeholder Course 1" },
-      { label: "Placeholder Course 2" },
-      { label: "Placeholder Course 3" },
-      { label: "View all courses →", variant: "cta" },
-    ],
-  },
-  {
-    title: "Ecosystem",
+    title: "Selected work",
     links: [
       { label: "Property Voice AI", href: "/projects/property-voice-ai" },
       { label: "PDF-Chat Application", href: "/projects/pdf-chat" },
@@ -62,25 +48,17 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
     ],
   },
   {
-    title: "About & Contact",
+    title: "About",
     links: [
-      { label: "About Ajay", href: "/resume" },
-      { label: "Contact & Inquiries", href: "/contact" },
-      { label: "Terms & Conditions" },
-      { label: "Privacy Policy" },
-      { label: "Refund Policy" },
+      { label: "Resume", href: "/resume" },
+      { label: "Contact", href: "/contact" },
     ],
   },
 ];
 
-/** Small print above the copyright line (business name, address, tax ID). */
-export const FOOTER_NOTE =
-  "Placeholder — registered business name, address, and tax ID go here.";
-
 export const FOOTER_TAGLINE = "Built with Next.js.";
 
 export const SOCIAL_LINKS: SocialLink[] = [
-  { label: "YouTube", icon: FaYoutube },
   { label: "Twitter", icon: FaTwitter, href: PERSON.x },
   { label: "LinkedIn", icon: FaLinkedin, href: PERSON.linkedin },
   { label: "GitHub", icon: FaGithub, href: PERSON.github },

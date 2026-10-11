@@ -8,7 +8,9 @@ import { absoluteUrl } from "@/lib/site";
 export const dynamic = "force-static";
 
 export function generateStaticParams() {
-  return getPersonalSlugs().map((slug) => ({ slug }));
+  return getAllPersonalPosts()
+    .filter((post) => post.frontmatter.date && !post.frontmatter.placeholder)
+    .map((post) => ({ slug: post.slug }));
 }
 
 export async function generateMetadata({
@@ -19,12 +21,11 @@ export async function generateMetadata({
   const { slug } = await params;
   if (!getPersonalSlugs().includes(slug)) return {};
   const { frontmatter } = getPersonalPost(slug);
+  if (frontmatter.placeholder || !frontmatter.date) return {};
   return {
     title: frontmatter.title,
     description: frontmatter.summary,
     alternates: { canonical: `/writing/personal/${slug}` },
-    // Placeholders aren't real posts yet, so keep them out of search engines.
-    ...(frontmatter.placeholder ? { robots: { index: false } } : {}),
     openGraph: {
       title: frontmatter.title,
       description: frontmatter.summary,
@@ -57,7 +58,10 @@ export default async function PersonalPostPage({
   if (!getPersonalSlugs().includes(slug)) notFound();
 
   const { frontmatter, body } = getPersonalPost(slug);
-  const otherPosts = getAllPersonalPosts().filter((p) => p.slug !== slug);
+  if (frontmatter.placeholder || !frontmatter.date) notFound();
+  const otherPosts = getAllPersonalPosts().filter(
+    (p) => p.slug !== slug && p.frontmatter.date && !p.frontmatter.placeholder
+  );
 
   return (
     <article className="max-w-none py-10">
@@ -85,15 +89,9 @@ export default async function PersonalPostPage({
         </h1>
         <p className="text-lg text-foreground/70 leading-relaxed mb-4">{frontmatter.summary}</p>
         <div className="flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-xs text-muted-foreground">
-          {frontmatter.placeholder || !frontmatter.date ? (
-            <span>Placeholder · not written yet</span>
-          ) : (
-            <>
-              <time dateTime={frontmatter.date}>{formatDate(frontmatter.date)}</time>
-              <span>·</span>
-              <span>{readingTime(body)} min read</span>
-            </>
-          )}
+          <time dateTime={frontmatter.date}>{formatDate(frontmatter.date)}</time>
+          <span>·</span>
+          <span>{readingTime(body)} min read</span>
         </div>
       </header>
 

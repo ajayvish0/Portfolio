@@ -12,6 +12,10 @@ Ajay Vishwakarma is an AI full stack engineer (India) who builds real-time AI vo
 - [Barge-In Is the Feature](https://ajayvishwakarma.dev/writing/barge-in-is-the-feature): A voice agent that keeps talking over you doesn't feel like a conversation. In Property Voice AI, user speech cancels the model stream and the audio queue instantly.
 - [Move Slow Work Off the Request Path](https://ajayvishwakarma.dev/writing/move-slow-work-off-the-request-path): Call dispositions, campaign sync and lead updates don't need to block an agent's next call. Moving them to background jobs raised throughput by 45%.
 
-## About
+## Site
 
-- [About](https://ajayvishwakarma.dev/about): Full bio, experience, and skills.
+- [Projects](https://ajayvishwakarma.dev/side-projects): AI and full stack systems, including voice agents, document chat, and applicant tracking.
+- [Blogs](https://ajayvishwakarma.dev/blogs): Essays on Git, LLM streaming, and backend systems.
+- [Writing](https://ajayvishwakarma.dev/writing): Notes on voice AI and backend systems.
+- [Resume](https://ajayvishwakarma.dev/resume): Experience, education, and skills.
+- [Contact](https://ajayvishwakarma.dev/contact): Hiring, collaboration, and project inquiries.

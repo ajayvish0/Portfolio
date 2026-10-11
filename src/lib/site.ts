@@ -6,6 +6,11 @@ export const SITE_URL =
 
 export const SITE_NAME = "Ajay Vishwakarma";
 
+// Buttondown newsletter username (the name in buttondown.com/<username>). It is
+// public, not a secret: the embed form needs no API key. Fixed on purpose so no
+// environment setting can send signups to another newsletter.
+export const BUTTONDOWN_USERNAME = "ajayvisssh";
+
 export const PERSON = {
   name: "Ajay Vishwakarma",
   email: "ajayvisssh@gmail.com",

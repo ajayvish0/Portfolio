@@ -16,8 +16,6 @@ export function buildSearchIndex(): SearchItem[] {
     { title: "Home", summary: "Introduction and selected work", href: "/", group: "Pages" },
     { title: "Projects", summary: "Open-source and side projects", href: "/side-projects", group: "Pages" },
     { title: "Blogs", summary: "Long-form essays", href: "/blogs", group: "Pages" },
-    { title: "User Manual", summary: "How to work with me", href: "/user-manual", group: "Pages" },
-    { title: "Books", summary: "Books I've read and recommend", href: "/books", group: "Pages" },
     { title: "Resume", summary: "Experience, education, and skills", href: "/resume", group: "Pages" },
     { title: "Projects", summary: "AI and full stack systems, end to end", href: "/projects", group: "Pages" },
     { title: "Writing", summary: "Notes on voice AI, LLM apps, and backend systems", href: "/writing", group: "Pages" },

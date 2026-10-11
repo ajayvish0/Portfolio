@@ -8,8 +8,6 @@ export const NAV_LINKS: NavLink[] = [
   { name: "Home", href: "/" },
   { name: "Projects", href: "/side-projects" },
   { name: "Blogs", href: "/blogs" },
-  { name: "User Manual", href: "/user-manual" },
-  { name: "Books", href: "/books" },
   { name: "Resume", href: "/resume" },
   { name: "Personal Writings", href: "/writing" },
 ];
@@ -25,8 +23,6 @@ export const SIDEBAR_LINKS: NavLink[] = [
   { name: "Home", href: "/" },
   { name: "Projects", href: "/side-projects" },
   { name: "Blogs", href: "/blogs" },
-  { name: "User Manual", href: "/user-manual" },
-  { name: "Books", href: "/books" },
   { name: "Resume", href: "/resume" },
 ];
 

@@ -1,21 +1,43 @@
 "use client";
 
 import * as React from "react";
+import { BUTTONDOWN_USERNAME } from "@/lib/site";
 
 // Buttondown's embed form (same endpoint and fields as its embed snippet),
-// styled to match the site. Submitting opens Buttondown's confirmation page in
-// a new tab. NewsletterSubscribe reveals it under a button row when clicked;
-// NewsletterCard shows it inline, always open.
-const BUTTONDOWN_ACTION = "https://buttondown.com/api/emails/embed-subscribe/Ajayvish0";
+// styled to match the site. No API key is involved: the endpoint takes a plain
+// form post. Submitting opens Buttondown's confirmation page in a new tab, and
+// Buttondown emails a confirmation link (double opt-in) before the address is
+// subscribed. NewsletterSubscribe reveals the form under a button row when
+// clicked; NewsletterCard shows it inline, always open.
+const BUTTONDOWN_ACTION = `https://buttondown.com/api/emails/embed-subscribe/${BUTTONDOWN_USERNAME}`;
+const BUTTONDOWN_ARCHIVE = `https://buttondown.com/${BUTTONDOWN_USERNAME}`;
 const FORM_ID = "newsletter-subscribe";
+// What readers get and how often: a specific promise converts better than "subscribe".
+const PITCH =
+  "One email when a new post is out: practical write-ups on LLM apps, voice agents, and the production bugs behind them.";
+
+// Matches what Buttondown accepts in practice: one @, a dot in the domain, no spaces.
+// The browser's type="email" check alone lets through addresses like "me@localhost".
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+const EMAIL_MAX_LENGTH = 254;
+
+// false while rendering on the server and before hydration, true after. Until
+// then the form keeps the browser's own email check, so it still works without JS.
+const noopSubscribe = () => () => {};
+function useHydrated() {
+  return React.useSyncExternalStore(noopSubscribe, () => true, () => false);
+}
 
 export function NewsletterSubscribe({
   className,
   submitClassName,
+  showArchive = false,
 }: {
   className: string;
   /** Overrides the Subscribe button's colors, for pages with their own palette. */
   submitClassName?: string;
+  /** Link to past issues. Pass hasSentIssues() so an empty archive is never linked. */
+  showArchive?: boolean;
 }) {
   const [open, setOpen] = React.useState(false);
   const inputRef = React.useRef<HTMLInputElement>(null);
@@ -39,7 +61,13 @@ export function NewsletterSubscribe({
       {/* order-last + basis-full: drops below the whole button row. */}
       {open && (
         <div id={FORM_ID} className="order-last basis-full">
-          <NewsletterForm inputId="newsletter-email" inputRef={inputRef} submitClassName={submitClassName} />
+          <p className="mb-3 max-w-md text-sm text-foreground/70">{PITCH}</p>
+          <NewsletterForm
+            inputId="newsletter-email"
+            inputRef={inputRef}
+            submitClassName={submitClassName}
+            showArchive={showArchive}
+          />
         </div>
       )}
     </>
@@ -47,7 +75,7 @@ export function NewsletterSubscribe({
 }
 
 /** An always-open signup box, for the end of a list of posts. */
-export function NewsletterCard() {
+export function NewsletterCard({ showArchive = false }: { showArchive?: boolean }) {
   return (
     <aside
       aria-labelledby="newsletter-card-title"
@@ -57,33 +85,100 @@ export function NewsletterCard() {
       <p id="newsletter-card-title" className="font-medium text-foreground">
         Subscribe to my newsletter
       </p>
-      <p className="mt-1 mb-4 text-sm text-foreground/70">
-        New posts on voice AI, LLM apps, and backend systems, straight to your inbox. No spam;
-        unsubscribe anytime.
-      </p>
-      <NewsletterForm inputId="newsletter-card-email" showLabel={false} />
+      <p className="mt-1 mb-4 text-sm text-foreground/70">{PITCH}</p>
+      <NewsletterForm inputId="newsletter-card-email" showLabel={false} showArchive={showArchive} />
     </aside>
   );
+}
+
+function validateEmail(value: string): string | null {
+  if (!value) return "Enter your email address.";
+  if (value.length > EMAIL_MAX_LENGTH || !EMAIL_PATTERN.test(value)) {
+    return "Enter a valid email address, like you@example.com.";
+  }
+  return null;
 }
 
 function NewsletterForm({
   inputId,
   inputRef,
   showLabel = true,
+  showArchive = false,
   submitClassName = "border-[var(--md-primary)] bg-[var(--md-primary)] text-[var(--md-primary-fg)] hover:opacity-90",
 }: {
   inputId: string;
   inputRef?: React.Ref<HTMLInputElement>;
   showLabel?: boolean;
+  showArchive?: boolean;
   submitClassName?: string;
 }) {
-  const [submitted, setSubmitted] = React.useState(false);
+  const [email, setEmail] = React.useState("");
+  const [error, setError] = React.useState<string | null>(null);
+  const [submittedEmail, setSubmittedEmail] = React.useState<string | null>(null);
+  const statusRef = React.useRef<HTMLDivElement>(null);
+  // Set once a valid address is sent, so a double click can't open two tabs.
+  const sentRef = React.useRef(false);
+  const hydrated = useHydrated();
+  const errorId = `${inputId}-error`;
+  const noteId = `${inputId}-note`;
 
-  if (submitted) {
+  // Keyboard and screen reader users land on the confirmation when the form goes away.
+  React.useEffect(() => {
+    if (submittedEmail) statusRef.current?.focus();
+  }, [submittedEmail]);
+
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    if (sentRef.current) {
+      event.preventDefault();
+      return;
+    }
+    const input = event.currentTarget.elements.namedItem("email") as HTMLInputElement;
+    const value = email.trim();
+    const message = validateEmail(value);
+    if (message) {
+      event.preventDefault();
+      setError(message);
+      input.focus();
+      return;
+    }
+    // Send the trimmed address, then swap to the confirmation note once the
+    // browser has posted the form to Buttondown's tab.
+    input.value = value;
+    sentRef.current = true;
+    setError(null);
+    setTimeout(() => setSubmittedEmail(value), 0);
+  }
+
+  if (submittedEmail) {
     return (
-      <p className="text-sm text-foreground/70">
-        Thanks! Check your inbox to confirm your subscription.
-      </p>
+      <div
+        ref={statusRef}
+        role="status"
+        tabIndex={-1}
+        className="max-w-md text-sm text-foreground/70 outline-none"
+      >
+        <p>
+          <span className="font-medium text-foreground">Almost done.</span> Buttondown has opened a
+          new tab and sent a confirmation link to{" "}
+          <span className="font-medium text-foreground break-all">{submittedEmail}</span>. Click it to
+          finish subscribing.
+        </p>
+        <p className="mt-2">
+          Not in your inbox? Check spam or promotions, or{" "}
+          <button
+            type="button"
+            onClick={() => {
+              sentRef.current = false;
+              setSubmittedEmail(null);
+              setEmail("");
+            }}
+            className="font-medium text-foreground underline underline-offset-2 hover:no-underline"
+          >
+            use a different email
+          </button>
+          .
+        </p>
+      </div>
     );
   }
 
@@ -92,8 +187,8 @@ function NewsletterForm({
       action={BUTTONDOWN_ACTION}
       method="post"
       target="_blank"
-      // Swap to the thank-you note after the browser has sent the form.
-      onSubmit={() => setTimeout(() => setSubmitted(true), 0)}
+      noValidate={hydrated}
+      onSubmit={handleSubmit}
       className="max-w-md"
     >
       <label
@@ -109,9 +204,20 @@ function NewsletterForm({
           type="email"
           name="email"
           required
+          maxLength={EMAIL_MAX_LENGTH}
           autoComplete="email"
+          inputMode="email"
+          autoCapitalize="none"
+          spellCheck={false}
           placeholder="you@example.com"
-          className="h-9 min-w-0 flex-1 rounded-sm border border-input bg-background px-3 text-sm text-foreground outline-none placeholder:text-muted-foreground focus-visible:border-ring"
+          value={email}
+          onChange={(e) => {
+            setEmail(e.target.value);
+            if (error) setError(null);
+          }}
+          aria-invalid={error ? true : undefined}
+          aria-describedby={error ? `${errorId} ${noteId}` : noteId}
+          className="h-9 min-w-0 flex-1 rounded-sm border border-input bg-background px-3 text-sm text-foreground outline-none placeholder:text-muted-foreground focus-visible:border-ring aria-invalid:border-destructive"
         />
         <input type="hidden" name="embed" value="1" />
         <button
@@ -121,15 +227,36 @@ function NewsletterForm({
           Subscribe
         </button>
       </div>
-      <p className="mt-2 text-xs text-muted-foreground">
+      {error && (
+        <p id={errorId} role="alert" className="mt-2 text-sm text-destructive">
+          {error}
+        </p>
+      )}
+      <p id={noteId} className="mt-2 text-xs text-muted-foreground">
+        Your email is only used to send new posts. It is never shared or sold. No spam;
+        every email has a one-click unsubscribe link.{" "}
+        {showArchive && (
+          <>
+            <a
+              href={BUTTONDOWN_ARCHIVE}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline underline-offset-2 hover:no-underline"
+            >
+              Past issues<span className="sr-only"> (opens in a new tab)</span>
+            </a>
+            {" · "}
+          </>
+        )}
         <a
-          href="https://buttondown.com"
+          href="https://buttondown.com/legal/privacy"
           target="_blank"
           rel="noopener noreferrer"
-          className="hover:underline"
+          className="underline underline-offset-2 hover:no-underline"
         >
-          Powered by Buttondown.
+          Powered by Buttondown<span className="sr-only"> (privacy policy, opens in a new tab)</span>
         </a>
+        .
       </p>
     </form>
   );

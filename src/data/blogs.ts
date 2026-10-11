@@ -23,14 +23,32 @@ export interface BlogPost {
   href?: string;
 }
 
-// Placeholder entries for /blogs. When a post is ready, overwrite one entry's
-// title, date, category, and tags and add its href. Year groups, counts, and
-// filter pills are all derived from this list, so nothing else needs editing.
+// Entries for /blogs. Year groups, counts, and filter pills are all derived
+// from this list, so adding a post means adding one entry here.
 export const BLOGS: BlogPost[] = [
-  { title: "Placeholder Post 01", date: "2026-09-01", category: "AI Systems", tags: ["voice-ai", "llm"] },
-  { title: "Placeholder Post 02", date: "2026-07-14", category: "Backend Engineering", tags: ["nodejs", "async-jobs"] },
-  { title: "Placeholder Post 03", date: "2026-05-05", category: "AI Systems", tags: ["rag", "langchain"] },
-  { title: "Placeholder Post 04", date: "2026-03-10", category: "Full Stack", tags: ["react", "websockets"] },
-  { title: "Placeholder Post 05", date: "2025-11-18", category: "AI Systems", tags: ["ai-agents", "tool-calling"] },
-  { title: "Placeholder Post 06", date: "2025-08-26", category: "Backend Engineering", tags: ["postgresql", "indexing"] },
+  // 2026
+  {
+    title: "Two GitLab Accounts, One Machine, No Key Swapping",
+    date: "2026-10-07",
+    category: "DevOps",
+    tags: ["git", "gitlab", "ssh", "devops"],
+    summary:
+      "The repository picks the SSH identity, not you. One host-alias block in ~/.ssh/config and one word in the remote URL route every clone, pull, and push to the right GitLab account. Covers the authentication chain link by link, Windows and macOS setup, and why the ssh your terminal runs is not proof of which ssh Git runs.",
+    href: "https://medium.com/@ajayvisssh/two-gitlab-accounts-one-machine-no-key-swapping-5f82eeff05a6",
+    sources: [
+      { name: "Medium", href: "https://medium.com/@ajayvisssh/two-gitlab-accounts-one-machine-no-key-swapping-5f82eeff05a6" },
+    ],
+  },
+  {
+    title: "Why LLM Streaming Works Locally and Breaks in Production",
+    date: "2026-10-03",
+    category: "AI Systems",
+    tags: ["llm", "streaming", "nodejs", "backend"],
+    summary:
+      "The model is rarely at fault. The proxy that buffers tokens, the closed tab that keeps generating, the error that arrives after 200 OK, and the split UTF-8 character are. Why your server is not a pipe, why chat should stream over fetch rather than EventSource, and how to catch each failure.",
+    href: "https://medium.com/@ajayvisssh/why-llm-streaming-works-locally-and-breaks-in-production-ec1c079a3fb3",
+    sources: [
+      { name: "Medium", href: "https://medium.com/@ajayvisssh/why-llm-streaming-works-locally-and-breaks-in-production-ec1c079a3fb3" },
+    ],
+  },
 ];

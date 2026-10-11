@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { getAllPersonalPosts, getAllWritingPosts } from "@/lib/content";
 import { PERSON } from "@/lib/site";
+import { hasSentIssues } from "@/lib/buttondown";
 import { NewsletterCard, NewsletterSubscribe } from "@/components/sections/newsletter-subscribe";
 
 export const metadata: Metadata = {
@@ -50,8 +51,11 @@ const buttonBase =
 const buttonOutline = `${buttonBase} border-border bg-card text-foreground hover:border-foreground/30`;
 const buttonFilled = `${buttonBase} border-[var(--md-primary)] bg-[var(--md-primary)] text-[var(--md-primary-fg)] hover:opacity-90`;
 
-export default function WritingPage() {
-  const personalPosts = getAllPersonalPosts();
+export default async function WritingPage() {
+  const showArchive = await hasSentIssues();
+  const personalPosts = getAllPersonalPosts().filter(
+    (post) => post.frontmatter.date && !post.frontmatter.placeholder
+  );
 
   return (
     <div className="max-w-none py-10">
@@ -63,7 +67,7 @@ export default function WritingPage() {
         <a href="#technical-popular-blogs" className={buttonOutline}>
           Popular posts
         </a>
-        <NewsletterSubscribe className={buttonFilled} />
+        <NewsletterSubscribe className={buttonFilled} showArchive={showArchive} />
         <a
           href={PERSON.linkedin}
           target="_blank"
@@ -77,52 +81,49 @@ export default function WritingPage() {
       {/* scroll-mt clears the sticky header when jumping here from "Popular posts". */}
       <section id="technical-popular-blogs" className="mb-8 scroll-mt-28">
         <TechnicalBlogs />
-        <NewsletterCard />
+        <NewsletterCard showArchive={showArchive} />
       </section>
 
-      {/* Personal writing: each entry opens its own page at /writing/personal/<slug>.
-          Posts live in content/personal/*.mdx; "placeholder: true" marks one not yet written. */}
-      <section aria-labelledby="personal-writing" className="mt-12">
-        <h2
-          id="personal-writing"
-          className="scroll-mt-28 text-[1.5625em] font-light tracking-[-0.01em] text-foreground mb-4"
-        >
-          Personal writing
-        </h2>
-        <div className="flex flex-col divide-y divide-border">
-          {personalPosts.map((post) => {
-            const { title, summary, date, placeholder } = post.frontmatter;
-            return (
-              <Link
-                key={post.slug}
-                href={`/writing/personal/${post.slug}`}
-                className="group block py-6 first:pt-2"
-              >
-                <p className="mb-2 font-mono text-xs uppercase tracking-wider text-muted-foreground">
-                  {placeholder || !date ? (
-                    "Placeholder"
-                  ) : (
-                    <>
-                      <time dateTime={date}>{formatFeedDate(date)}</time> · {readingTime(post.body)}{" "}
-                      min read
-                    </>
-                  )}
-                </p>
-                <h3
-                  data-toc-skip="true"
-                  className="text-[1.25em] font-normal tracking-[-0.01em] text-foreground mb-2 transition-colors group-hover:text-primary"
+      {/* Personal writing: published posts in content/personal/*.mdx. A file with
+          placeholder: true, or without a date, stays off this page. */}
+      {personalPosts.length > 0 && (
+        <section aria-labelledby="personal-writing" className="mt-12">
+          <h2
+            id="personal-writing"
+            className="scroll-mt-28 text-[1.5625em] font-light tracking-[-0.01em] text-foreground mb-4"
+          >
+            Personal writing
+          </h2>
+          <div className="flex flex-col divide-y divide-border">
+            {personalPosts.map((post) => {
+              const { title, summary, date } = post.frontmatter;
+              if (!date) return null;
+              return (
+                <Link
+                  key={post.slug}
+                  href={`/writing/personal/${post.slug}`}
+                  className="group block py-6 first:pt-2"
                 >
-                  {title}
-                </h3>
-                <p className="text-foreground/65 leading-relaxed mb-3">{summary}</p>
-                <span className="ui-font text-primary text-sm font-medium group-hover:underline">
-                  Continue reading →
-                </span>
-              </Link>
-            );
-          })}
-        </div>
-      </section>
+                  <p className="mb-2 font-mono text-xs uppercase tracking-wider text-muted-foreground">
+                    <time dateTime={date}>{formatFeedDate(date)}</time> · {readingTime(post.body)}{" "}
+                    min read
+                  </p>
+                  <h3
+                    data-toc-skip="true"
+                    className="text-[1.25em] font-normal tracking-[-0.01em] text-foreground mb-2 transition-colors group-hover:text-primary"
+                  >
+                    {title}
+                  </h3>
+                  <p className="text-foreground/65 leading-relaxed mb-3">{summary}</p>
+                  <span className="ui-font text-primary text-sm font-medium group-hover:underline">
+                    Continue reading →
+                  </span>
+                </Link>
+              );
+            })}
+          </div>
+        </section>
+      )}
     </div>
   );
 }
