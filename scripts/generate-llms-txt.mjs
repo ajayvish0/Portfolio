@@ -48,9 +48,13 @@ ${aboutSummary}
 
 ${section("Projects", projects, "/projects")}
 ${section("Writing", writing, "/writing")}
-## About
+## Site
 
-- [About](${SITE_URL}/about): Full bio, experience, and skills.
+- [Projects](${SITE_URL}/side-projects): AI and full stack systems, including voice agents, document chat, and applicant tracking.
+- [Blogs](${SITE_URL}/blogs): Essays on Git, LLM streaming, and backend systems.
+- [Writing](${SITE_URL}/writing): Notes on voice AI and backend systems.
+- [Resume](${SITE_URL}/resume): Experience, education, and skills.
+- [Contact](${SITE_URL}/contact): Hiring, collaboration, and project inquiries.
 `;
 
 const fullParts = [

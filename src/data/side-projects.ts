@@ -9,8 +9,7 @@ export interface SideProject {
   stars?: number;
   /**
    * Where the title links: a site path ("/projects/my-project") or a full URL.
-   * Leave it out while the card is a placeholder — the title then renders as
-   * plain text, so visitors never land on a missing page.
+   * Leave it out when there is no detail page — the title stays plain text.
    */
   href?: string;
   /** Source repository, shown as [code]. */

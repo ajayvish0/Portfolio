@@ -1,12 +1,12 @@
 import type { MetadataRoute } from "next";
-import { getAllProjects, getAllWritingPosts } from "@/lib/content";
+import { getAllPersonalPosts, getAllProjects, getAllWritingPosts } from "@/lib/content";
 import { SITE_URL } from "@/lib/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: `${SITE_URL}/`, changeFrequency: "monthly", priority: 1 },
-    { url: `${SITE_URL}/user-manual`, changeFrequency: "monthly", priority: 0.6 },
-    { url: `${SITE_URL}/books`, changeFrequency: "monthly", priority: 0.6 },
+    { url: `${SITE_URL}/side-projects`, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${SITE_URL}/blogs`, changeFrequency: "weekly", priority: 0.8 },
     { url: `${SITE_URL}/resume`, changeFrequency: "monthly", priority: 0.8 },
     { url: `${SITE_URL}/projects`, changeFrequency: "weekly", priority: 0.9 },
     { url: `${SITE_URL}/writing`, changeFrequency: "weekly", priority: 0.9 },
@@ -27,5 +27,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  return [...staticRoutes, ...projectRoutes, ...writingRoutes];
+  const personalRoutes: MetadataRoute.Sitemap = getAllPersonalPosts()
+    .filter((p) => p.frontmatter.date && !p.frontmatter.placeholder)
+    .map((p) => ({
+      url: `${SITE_URL}/writing/personal/${p.slug}`,
+      lastModified: p.frontmatter.date,
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
+    }));
+
+  return [...staticRoutes, ...projectRoutes, ...writingRoutes, ...personalRoutes];
 }
