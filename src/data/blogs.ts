@@ -37,6 +37,8 @@ export const BLOGS: BlogPost[] = [
     href: "https://medium.com/@ajayvisssh/two-gitlab-accounts-one-machine-no-key-swapping-5f82eeff05a6",
     sources: [
       { name: "Medium", href: "https://medium.com/@ajayvisssh/two-gitlab-accounts-one-machine-no-key-swapping-5f82eeff05a6" },
+      { name: "DEV", href: "https://dev.to/ajayvish01/stop-swapping-ssh-keys-for-two-gitlab-accounts-use-host-aliases-5f1h" },
+      { name: "LinkedIn", href: "https://www.linkedin.com/pulse/how-i-run-two-gitlab-accounts-one-windows-machine-keys-vishwakarma-yxabc/" },
     ],
   },
   {
@@ -49,6 +51,8 @@ export const BLOGS: BlogPost[] = [
     href: "https://medium.com/@ajayvisssh/why-llm-streaming-works-locally-and-breaks-in-production-ec1c079a3fb3",
     sources: [
       { name: "Medium", href: "https://medium.com/@ajayvisssh/why-llm-streaming-works-locally-and-breaks-in-production-ec1c079a3fb3" },
+      { name: "DEV", href: "https://dev.to/ajayvish01/llm-streaming-works-in-the-demo-these-4-hops-break-it-in-prod-50pp" },
+      { name: "LinkedIn", href: "https://www.linkedin.com/pulse/how-i-stream-llm-answers-web-app-four-hops-what-each-one-vishwakarma-adric/" },
     ],
   },
 ];
