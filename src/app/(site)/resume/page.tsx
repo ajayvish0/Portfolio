@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { Download, ExternalLink } from "lucide-react";
+import { JsonLd } from "@/components/json-ld";
+import { absoluteUrl, personId } from "@/lib/site";
 
 // To update: replace public/resume/resume.pdf, then run `npm run resume:image`
 // to re-render the preview (public/resume/resume.png) from its first page.
@@ -22,9 +24,18 @@ export const metadata: Metadata = {
   alternates: { canonical: "/resume" },
 };
 
+// /about redirects here, so this is the page that describes the person.
+const profilePageJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ProfilePage",
+  url: absoluteUrl("/resume"),
+  mainEntity: { "@id": personId() },
+};
+
 export default function ResumePage() {
   return (
     <div className="max-w-none py-10">
+      <JsonLd data={profilePageJsonLd} />
       <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
         <h1 id="resume" className="text-[2em] font-normal leading-[1.3] text-foreground/70">
           Resume

@@ -38,7 +38,7 @@ export interface HomeContent {
 // Everything the homepage says lives here.
 export const home: HomeContent = {
   name: PERSON.name,
-  photo: "/images/ajay.jpg",
+  photo: PERSON.photo,
   bio: [
     "I'm Ajay, an AI full stack engineer. I build real-time AI products end to end: voice and SMS agents that talk to leads, softphone and power-dialer infrastructure, and the APIs and background jobs that keep them fast.",
     "Right now I freelance for a property-tech CRM, where I've built lead pipelines, an AI call-training platform with configurable personas, and real-time voice agents that cut lead response time by 60%.",

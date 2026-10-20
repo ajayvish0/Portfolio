@@ -3,7 +3,7 @@ import { Roboto, Roboto_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { JsonLd } from "@/components/json-ld";
-import { PERSON, SITE_URL, personId } from "@/lib/site";
+import { PERSON, SITE_URL, absoluteUrl, personId } from "@/lib/site";
 import { DOMAINS } from "@/data/technical-expertise";
 
 const roboto = Roboto({
@@ -32,14 +32,7 @@ export const metadata: Metadata = {
       "AI full stack engineer building real-time voice and SMS agents, LLM-powered products, and fast backend APIs with Node.js, FastAPI and React.",
     url: SITE_URL,
     siteName: "Ajay Vishwakarma Portfolio",
-    images: [
-      {
-        url: "/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "Ajay Vishwakarma — AI Full Stack Engineer",
-      },
-    ],
+    // The image comes from app/opengraph-image.tsx.
     locale: "en_US",
     type: "website",
   },
@@ -48,7 +41,6 @@ export const metadata: Metadata = {
     title: "Ajay Vishwakarma — AI Full Stack Engineer",
     description:
       "AI full stack engineer building real-time voice and SMS agents, LLM-powered products, and fast backend APIs with Node.js, FastAPI and React.",
-    images: ["/og-image.png"],
   },
   alternates: {
     canonical: SITE_URL,
@@ -65,13 +57,15 @@ const personJsonLd = {
   "@id": personId(),
   name: PERSON.name,
   url: SITE_URL,
+  image: absoluteUrl(PERSON.photo),
+  description: PERSON.description,
   email: `mailto:${PERSON.email}`,
   jobTitle: PERSON.jobTitle,
   address: {
     "@type": "PostalAddress",
     addressCountry: "IN",
   },
-  sameAs: [PERSON.github, PERSON.linkedin, PERSON.x],
+  sameAs: [PERSON.github, PERSON.linkedin, PERSON.x, PERSON.medium, PERSON.dev],
   alumniOf: {
     "@type": "CollegeOrUniversity",
     name: PERSON.alumniOf,

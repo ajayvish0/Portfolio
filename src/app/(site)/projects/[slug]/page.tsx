@@ -58,20 +58,11 @@ export default async function ProjectDetailPage({
     description: frontmatter.summary,
     url,
     dateCreated: frontmatter.date,
+    datePublished: frontmatter.date,
     programmingLanguage: frontmatter.stack,
     codeRepository: frontmatter.repo,
     author: { "@id": personId() },
     creator: { "@id": personId() },
-  };
-
-  const creativeWorkJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "CreativeWork",
-    name: frontmatter.title,
-    description: frontmatter.summary,
-    url,
-    author: { "@id": personId() },
-    datePublished: frontmatter.date,
   };
 
   const otherProjects = getAllProjects().filter((p) => p.slug !== slug);
@@ -79,17 +70,16 @@ export default async function ProjectDetailPage({
   return (
     <article className="max-w-none py-10">
       <JsonLd data={jsonLd} />
-      <JsonLd data={creativeWorkJsonLd} />
       <JsonLd
         data={breadcrumbList([
           { name: "Home", url: absoluteUrl("/") },
-          { name: "Projects", url: absoluteUrl("/projects") },
+          { name: "Projects", url: absoluteUrl("/side-projects") },
           { name: frontmatter.title, url },
         ])}
       />
 
       <nav aria-label="Breadcrumb" className="mb-8 font-mono text-xs text-muted-foreground">
-        <Link href="/projects" className="hover:text-primary underline underline-offset-4">
+        <Link href="/side-projects" className="hover:text-primary underline underline-offset-4">
           Projects
         </Link>
         <span className="mx-2">/</span>
