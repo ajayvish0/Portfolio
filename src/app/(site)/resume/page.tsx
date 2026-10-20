@@ -63,7 +63,7 @@ export default function ResumePage() {
         <Image
           src={RESUME_PREVIEW}
           alt="Ajay Vishwakarma's one-page resume"
-          width={1697}
+          width={1855}
           height={2400}
           sizes="(max-width: 840px) 100vw, 800px"
           priority
