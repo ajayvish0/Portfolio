@@ -5,6 +5,8 @@ const nextConfig: NextConfig = {
     return [
       // llms.txt used to point here. The resume is the about page.
       { source: "/about", destination: "/resume", permanent: true },
+      // /side-projects is the one Projects index; project pages stay at /projects/<slug>.
+      { source: "/projects", destination: "/side-projects", permanent: true },
       // Retired stub pages. Temporary so the URLs can come back with real content.
       { source: "/books", destination: "/", permanent: false },
       { source: "/user-manual", destination: "/", permanent: false },

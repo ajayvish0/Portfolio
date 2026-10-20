@@ -19,6 +19,8 @@ export interface WritingFrontmatter {
   title: string;
   summary: string;
   date: string;
+  /** Last meaningful edit (YYYY-MM-DD). Leave it out until the post is revised. */
+  updated?: string;
   tags: string[];
 }
 

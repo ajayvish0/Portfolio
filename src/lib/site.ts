@@ -15,11 +15,18 @@ export const PERSON = {
   name: "Ajay Vishwakarma",
   email: "ajayvisssh@gmail.com",
   jobTitle: "AI Full Stack Engineer",
+  /** One line used in structured data; keep it in step with the homepage bio. */
+  description:
+    "AI full stack engineer building real-time voice and SMS agents, LLM-powered products, and fast backend APIs with Node.js, FastAPI and React.",
+  /** Portrait under /public. */
+  photo: "/images/ajay.jpg",
   location: "India",
   github: "https://github.com/Ajayvish0",
   linkedin: "https://linkedin.com/in/ajay-vishwakarma-3409a0225",
   /** X (Twitter) profile URL. */
   x: "https://x.com/AjayVish01",
+  medium: "https://medium.com/@ajayvisssh",
+  dev: "https://dev.to/ajayvish01",
   alumniOf: "Oriental Institute of Science and Technology",
 };
 

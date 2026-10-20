@@ -8,7 +8,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${SITE_URL}/side-projects`, changeFrequency: "monthly", priority: 0.8 },
     { url: `${SITE_URL}/blogs`, changeFrequency: "weekly", priority: 0.8 },
     { url: `${SITE_URL}/resume`, changeFrequency: "monthly", priority: 0.8 },
-    { url: `${SITE_URL}/projects`, changeFrequency: "weekly", priority: 0.9 },
     { url: `${SITE_URL}/writing`, changeFrequency: "weekly", priority: 0.9 },
     { url: `${SITE_URL}/contact`, changeFrequency: "yearly", priority: 0.5 },
   ];
@@ -22,7 +21,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const writingRoutes: MetadataRoute.Sitemap = getAllWritingPosts().map((p) => ({
     url: `${SITE_URL}/writing/${p.slug}`,
-    lastModified: p.frontmatter.date,
+    lastModified: p.frontmatter.updated ?? p.frontmatter.date,
     changeFrequency: "monthly",
     priority: 0.7,
   }));

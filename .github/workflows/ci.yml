@@ -29,3 +29,7 @@ jobs:
       - run: npm run lint
       # Also type-checks the project.
       - run: npm run build
+      # Serves the build and checks what crawlers see: every page renders without
+      # JS, canonical/og:url/sitemap stay on the site's domain, the og:image
+      # exists, and no template leftovers or "Placeholder" text ship.
+      - run: npm run verify

@@ -58,7 +58,7 @@ export default async function WritingDetailPage({
     description: frontmatter.summary,
     url,
     datePublished: frontmatter.date,
-    dateModified: frontmatter.date,
+    dateModified: frontmatter.updated ?? frontmatter.date,
     keywords: frontmatter.tags.join(", "),
     author: { "@id": personId() },
   };
