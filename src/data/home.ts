@@ -8,7 +8,10 @@ export interface HomeProject {
   summary: string;
   /** Internal project page (/projects/slug) or an external URL. */
   href: string;
+  /** Source repository. Always the project repo, never the GitHub profile. */
   github: string;
+  /** Live demo. Leave it out when the project has no public deployment. */
+  live?: string;
 }
 
 export interface HomeSocial {
@@ -26,8 +29,7 @@ export interface HomeContent {
   photo: string;
   /** 3–5 short paragraphs. Inline links use markdown syntax: [text](/path). */
   bio: string[];
-  /** Exactly two. */
-  projects: [HomeProject, HomeProject];
+  projects: HomeProject[];
   email: string;
   linkedinDm: string;
   xDm: string;
@@ -49,16 +51,33 @@ export const home: HomeContent = {
     {
       title: "Property Voice AI",
       summary:
-        "A real-time voice negotiation trainer: close a real-estate deal against an emotionally adaptive GPT-4o seller, with barge-in and post-call scoring.",
+        "A voice trainer for property negotiations, with an adaptive seller, live interruption, and a scored debrief.",
       href: "/projects/property-voice-ai",
-      github: PERSON.github,
+      github: "https://github.com/Ajayvish0/prop-voice",
+      live: "https://propvoice.netlify.app/",
     },
     {
       title: "PDF-Chat Application",
       summary:
-        "Conversational querying over your PDFs — FastAPI, LangChain, React and PostgreSQL, with documents stored in Google Drive.",
+        "Question-answering over uploaded PDFs, with retrieval, a React client, and documents stored in Google Drive.",
       href: "/projects/pdf-chat",
-      github: PERSON.github,
+      github: "https://github.com/Ajayvish0/AI_PDF_CHAT",
+    },
+    {
+      title: "Inkstack",
+      summary:
+        "A publishing platform for technical writing, with drafts, tags, and search on Cloudflare Workers.",
+      href: "/projects/inkstack",
+      github: "https://github.com/Ajayvish0/inkstack",
+      live: "https://inkstack.inkstack-api.workers.dev",
+    },
+    {
+      title: "Collab Whiteboard",
+      summary:
+        "A shared whiteboard for live collaboration, with synchronized strokes and durable boards.",
+      href: "/projects/collab-whiteboard",
+      github: "https://github.com/Ajayvish0/Collab_whiteboard",
+      live: "https://collaoboard.netlify.app/",
     },
   ],
   email: PERSON.email,

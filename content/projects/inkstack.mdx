@@ -1,0 +1,24 @@
+---
+title: "Inkstack"
+summary: "A writing platform for developers. Markdown with code highlighting, private drafts, tags and search, on one Cloudflare Worker with Hono, React, Prisma and Postgres."
+date: "2026-10-22"
+stack: ["React", "TypeScript", "Hono", "Prisma", "PostgreSQL", "Cloudflare Workers"]
+role: "Designer & Engineer"
+outcome: "A public writing app on one Worker: Markdown posts, private drafts, tags, full-text search, and a link preview for every post."
+repo: "https://github.com/Ajayvish0/inkstack"
+demo: "https://inkstack.inkstack-api.workers.dev"
+---
+
+Inkstack is a small writing platform for developers. You write Markdown, keep a post as a draft until it is ready, and publish it to a public page that previews properly when the link is shared.
+
+## One Worker for the site and the API
+
+The React app and the Hono API ship as a single Cloudflare Worker. The browser talks to the API on the same origin, so sessions can live in an HttpOnly cookie instead of a token in local storage. A crawler that requests a post gets Open Graph tags written at the edge, so Slack and LinkedIn show the post rather than a generic app shell.
+
+## Drafts, tags and search
+
+Drafts stay visible only to their author. A published post can be unpublished, edited or deleted. Each post takes up to five tags, and search runs across titles and bodies. The public feed is cursor-paginated, and each author has a profile page.
+
+## Data on Neon, reached through Hyperdrive
+
+Posts and accounts live in Postgres on Neon. Prisma 7 talks to it through the pg driver adapter, and Cloudflare Hyperdrive pools those connections close to the database. Passwords are hashed, sign-in is rate-limited, and mutating requests are checked for CSRF.

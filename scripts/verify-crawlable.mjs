@@ -58,7 +58,7 @@ function buildChecks() {
 
   checks.push({ path: "/", expect: "Ajay Vishwakarma" });
   checks.push({ path: "/resume", expect: "Download PDF" });
-  checks.push({ path: "/side-projects", expect: "Jobra AI" });
+  checks.push({ path: "/side-projects", expect: "Collab Whiteboard" });
   checks.push({ path: "/blogs", expect: "Two GitLab Accounts" });
   checks.push({ path: "/writing", expect: "Technical notes" });
   checks.push({ path: "/contact", expect: "Ajay" });

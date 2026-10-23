@@ -34,7 +34,7 @@ export function HomeHeader({
       )}
     >
       <div className={cn(container, "flex h-16 items-center gap-5 phone:h-auto phone:flex-wrap")}>
-        <Name className="whitespace-nowrap text-[26px] font-medium leading-none phone:flex phone:h-16 phone:items-center">
+        <Name className="whitespace-nowrap -translate-x-3 text-[26px] font-medium leading-none phone:flex phone:h-16 phone:translate-x-0 phone:items-center">
           <Link href="/" className="text-[var(--text)] no-underline">
             {home.name}
           </Link>

@@ -58,7 +58,8 @@ export function HomeNav({ githubUrl, searchIndex }: { githubUrl: string; searchI
         aria-label="Main"
         className={cn(
           sans,
-          "ml-auto flex items-center gap-5 text-[15px] font-medium",
+          "ml-auto flex translate-y-[6px] items-center gap-5 text-[15px] font-medium leading-none",
+          "phone:translate-y-0",
           "phone:order-last phone:ml-0 phone:w-full phone:flex-wrap phone:gap-x-3 phone:gap-y-2 phone:pb-3"
         )}
       >

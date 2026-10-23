@@ -44,6 +44,8 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
     links: [
       { label: "Property Voice AI", href: "/projects/property-voice-ai" },
       { label: "PDF-Chat Application", href: "/projects/pdf-chat" },
+      { label: "Inkstack", href: "/projects/inkstack" },
+      { label: "Collab Whiteboard", href: "/projects/collab-whiteboard" },
       { label: "GitHub", href: "https://github.com/Ajayvish0" },
     ],
   },

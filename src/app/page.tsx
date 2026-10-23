@@ -184,14 +184,27 @@ export default async function Home() {
                   <span aria-hidden="true" className="font-medium text-[var(--link)]">
                     View project →
                   </span>
-                  <a
-                    href={project.github}
-                    {...newTab}
-                    className="relative z-10 inline-flex items-center gap-1.5 text-[var(--muted)] hover:text-[var(--text)] hover:underline"
-                  >
-                    <FaGithub className="size-4" aria-hidden="true" />
-                    GitHub
-                  </a>
+                  <span className="relative z-10 inline-flex items-center gap-3">
+                    {project.live && (
+                      <a
+                        href={project.live}
+                        {...newTab}
+                        aria-label={`Live demo of ${project.title}`}
+                        className="text-[var(--muted)] hover:text-[var(--text)] hover:underline"
+                      >
+                        Live
+                      </a>
+                    )}
+                    <a
+                      href={project.github}
+                      {...newTab}
+                      aria-label={`GitHub repository for ${project.title}`}
+                      className="inline-flex items-center gap-1.5 text-[var(--muted)] hover:text-[var(--text)] hover:underline"
+                    >
+                      <FaGithub className="size-4" aria-hidden="true" />
+                      GitHub
+                    </a>
+                  </span>
                 </div>
               </article>
             ))}
