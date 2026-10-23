@@ -1,0 +1,24 @@
+---
+title: "Collab Whiteboard"
+summary: "A real-time collaborative whiteboard. Create a board, share the link, and sketch together — live cursors, undo, and boards that persist in Postgres."
+date: "2026-10-23"
+stack: ["React", "Node.js", "Express", "Socket.IO", "PostgreSQL"]
+role: "Designer & Engineer"
+outcome: "Shareable boards that sync strokes as they are drawn, survive a refresh, and reconnect cleanly after a dropped connection."
+repo: "https://github.com/Ajayvish0/Collab_whiteboard"
+demo: "https://collaoboard.netlify.app/"
+---
+
+Collab Whiteboard, also called TeamSketch, is a shared drawing board with no sign-up. One click creates a board with an unguessable URL. Anyone with the link can draw on it at the same time.
+
+## Strokes sync while you draw
+
+The canvas is SVG. Pencil, rectangle, ellipse, text and eraser changes go to the server over Socket.IO as they happen, so other people see a stroke while it is still being drawn, not only after the pointer lifts. Live cursors and avatars show who is on the board.
+
+The server applies each operation in arrival order and broadcasts it to the other clients. Every shape has a client-generated id, so a retried message does not draw the same shape twice. Your own undo and redo are inverse operations, and everyone else sees them as ordinary changes.
+
+## Boards that stay after you leave
+
+Active boards are held in memory and written to Postgres after a short debounce, then flushed when the last person leaves. A dropped connection rejoins the room and takes a fresh snapshot, and strokes made while offline are sent when the socket returns. The board can be exported as PNG or SVG.
+
+The frontend is on Netlify and the API is on Render. The free API tier sleeps after a stretch of inactivity, and the app says so while the server wakes up.

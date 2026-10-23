@@ -10,6 +10,42 @@ Ajay Vishwakarma is an AI full stack engineer (India) who builds real-time AI vo
 
 ---
 
+# Project: Collab Whiteboard
+
+Collab Whiteboard, also called TeamSketch, is a shared drawing board with no sign-up. One click creates a board with an unguessable URL. Anyone with the link can draw on it at the same time.
+
+## Strokes sync while you draw
+
+The canvas is SVG. Pencil, rectangle, ellipse, text and eraser changes go to the server over Socket.IO as they happen, so other people see a stroke while it is still being drawn, not only after the pointer lifts. Live cursors and avatars show who is on the board.
+
+The server applies each operation in arrival order and broadcasts it to the other clients. Every shape has a client-generated id, so a retried message does not draw the same shape twice. Your own undo and redo are inverse operations, and everyone else sees them as ordinary changes.
+
+## Boards that stay after you leave
+
+Active boards are held in memory and written to Postgres after a short debounce, then flushed when the last person leaves. A dropped connection rejoins the room and takes a fresh snapshot, and strokes made while offline are sent when the socket returns. The board can be exported as PNG or SVG.
+
+The frontend is on Netlify and the API is on Render. The free API tier sleeps after a stretch of inactivity, and the app says so while the server wakes up.
+
+---
+
+# Project: Inkstack
+
+Inkstack is a small writing platform for developers. You write Markdown, keep a post as a draft until it is ready, and publish it to a public page that previews properly when the link is shared.
+
+## One Worker for the site and the API
+
+The React app and the Hono API ship as a single Cloudflare Worker. The browser talks to the API on the same origin, so sessions can live in an HttpOnly cookie instead of a token in local storage. A crawler that requests a post gets Open Graph tags written at the edge, so Slack and LinkedIn show the post rather than a generic app shell.
+
+## Drafts, tags and search
+
+Drafts stay visible only to their author. A published post can be unpublished, edited or deleted. Each post takes up to five tags, and search runs across titles and bodies. The public feed is cursor-paginated, and each author has a profile page.
+
+## Data on Neon, reached through Hyperdrive
+
+Posts and accounts live in Postgres on Neon. Prisma 7 talks to it through the pg driver adapter, and Cloudflare Hyperdrive pools those connections close to the database. Passwords are hashed, sign-in is rate-limited, and mutating requests are checked for CSRF.
+
+---
+
 # Project: Property Voice AI
 
 Property Voice AI is a real-time voice negotiation trainer. You speak to David, an AI seller persona powered by OpenAI GPT-4o, and try to close a real-estate deal. David reacts to how the conversation goes, and at the end you get feedback you can act on.

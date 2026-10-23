@@ -4,6 +4,8 @@ Ajay Vishwakarma is an AI full stack engineer (India) who builds real-time AI vo
 
 ## Projects
 
+- [Collab Whiteboard](https://ajayvishwakarma.dev/projects/collab-whiteboard): A real-time collaborative whiteboard. Create a board, share the link, and sketch together — live cursors, undo, and boards that persist in Postgres.
+- [Inkstack](https://ajayvishwakarma.dev/projects/inkstack): A writing platform for developers. Markdown with code highlighting, private drafts, tags and search, on one Cloudflare Worker with Hono, React, Prisma and Postgres.
 - [Property Voice AI](https://ajayvishwakarma.dev/projects/property-voice-ai): A real-time voice negotiation trainer where you practise closing a real-estate deal against David, an emotionally adaptive GPT-4o seller.
 - [PDF-Chat Application](https://ajayvishwakarma.dev/projects/pdf-chat): A full-stack app for asking questions of your PDF documents, built with FastAPI, LangChain, React, PostgreSQL, and the Google Drive API.
 

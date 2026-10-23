@@ -6,7 +6,7 @@ import { slugify } from "@/lib/site-search";
 export const metadata: Metadata = {
   title: "Projects",
   description:
-    "AI and full stack systems built by Ajay Vishwakarma, including Property Voice AI, PDF-Chat, Jobra AI, and a Power Dialer.",
+    "Property Voice AI, PDF-Chat, Inkstack, and Collab Whiteboard — four projects by Ajay Vishwakarma, with source and live demos.",
   alternates: { canonical: "/side-projects" },
 };
 
@@ -46,8 +46,7 @@ export default function SideProjectsPage() {
         <small className="font-mono text-[0.5em] text-muted-foreground">({SIDE_PROJECTS.length})</small>
       </h1>
       <p className="text-foreground/65 leading-relaxed mb-8">
-        AI and full stack systems I have built — from real-time voice agents and call
-        infrastructure to document chat and applicant tracking.
+        Selected work across voice systems, document intelligence, and collaborative software.
       </p>
 
       <div className="grid gap-4 sm:grid-cols-2">
@@ -78,7 +77,7 @@ export default function SideProjectsPage() {
               {(project.code || project.website) && (
                 <p data-search-ignore className="ui-font mt-auto flex gap-3 text-sm">
                   {project.code && <ExternalLink href={project.code} label="code" />}
-                  {project.website && <ExternalLink href={project.website} label="website" />}
+                  {project.website && <ExternalLink href={project.website} label="live" />}
                 </p>
               )}
             </article>

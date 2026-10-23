@@ -14,7 +14,7 @@ export interface SideProject {
   href?: string;
   /** Source repository, shown as [code]. */
   code?: string;
-  /** Live site or demo, shown as [website]. */
+  /** Live site or demo, shown as [live]. */
   website?: string;
 }
 
@@ -24,41 +24,36 @@ export const SIDE_PROJECTS: SideProject[] = [
   {
     title: "Property Voice AI",
     description:
-      "A real-time voice negotiation trainer against an emotionally adaptive GPT-4o seller persona — token streaming over Socket.IO, sentence-level TTS, barge-in, and a 5-dimension scoring engine.",
+      "A voice trainer for property negotiations. An adaptive seller responds in real time, callers can interrupt, and each session ends with a scored debrief.",
     language: "JavaScript",
     href: "/projects/property-voice-ai",
-    code: "https://github.com/Ajayvish0",
+    code: "https://github.com/Ajayvish0/prop-voice",
+    website: "https://propvoice.netlify.app/",
   },
   {
     title: "PDF-Chat Application",
     description:
-      "Chat with your PDF documents — FastAPI, LangChain, React and PostgreSQL, with secure document storage in Google Drive.",
+      "Question-answering over uploaded PDFs. Retrieval and answers run through FastAPI and LangChain, with documents stored in Google Drive.",
     language: "Python",
     href: "/projects/pdf-chat",
-    code: "https://github.com/Ajayvish0",
+    code: "https://github.com/Ajayvish0/AI_PDF_CHAT",
   },
   {
-    title: "Jobra AI",
+    title: "Inkstack",
     description:
-      "An ML-powered applicant tracking system built at Cloudnexus — 45% better applicant matching and 60% less recruiter screening time.",
+      "A publishing platform for technical writing. Markdown, private drafts, tags, and search, served from a single Cloudflare Worker.",
     language: "TypeScript",
+    href: "/projects/inkstack",
+    code: "https://github.com/Ajayvish0/inkstack",
+    website: "https://inkstack.inkstack-api.workers.dev",
   },
   {
-    title: "AI Call Training Platform",
+    title: "Collab Whiteboard",
     description:
-      "Trainees practise real-world sales calls against configurable AI personas and scenarios, then get an automated post-call evaluation from OpenAI models.",
-    language: "TypeScript",
-  },
-  {
-    title: "Power Dialer",
-    description:
-      "Automatically starts campaign calls, tracks call state and dispositions, and moves to the next eligible lead without manual input.",
-    language: "TypeScript",
-  },
-  {
-    title: "Threat Management System",
-    description:
-      "2FA, RBAC, Excel data ingestion and dynamic visualization, built with React, Redux Toolkit, Node.js and MongoDB.",
+      "A shared whiteboard for live collaboration. Strokes and cursors stay in sync, and each board is stored in Postgres.",
     language: "JavaScript",
+    href: "/projects/collab-whiteboard",
+    code: "https://github.com/Ajayvish0/Collab_whiteboard",
+    website: "https://collaoboard.netlify.app/",
   },
 ];
