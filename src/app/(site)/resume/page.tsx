@@ -4,10 +4,10 @@ import { Download, ExternalLink } from "lucide-react";
 import { JsonLd } from "@/components/json-ld";
 import { absoluteUrl, personId } from "@/lib/site";
 
-// To update: replace public/resume/resume.pdf, then run `npm run resume:image`
-// to re-render the preview (public/resume/resume.png) from its first page.
+// To update: replace public/resume/Ajay_AiFullstack.pdf, then re-render
+// public/resume/preview.png from its first page.
 const RESUME_PDF = "/resume/Ajay_AiFullstack.pdf";
-const RESUME_PREVIEW = "/resume/Ajay_AiFullstack.png";
+const RESUME_PREVIEW = "/resume/preview.png";
 // Name the visitor's browser saves the file under.
 const DOWNLOAD_NAME = "Ajay-Vishwakarma-Resume.pdf";
 
